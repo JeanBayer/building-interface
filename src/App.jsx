@@ -16,6 +16,13 @@ function App() {
     fetchAppointments();
   }, []);
 
+  const onDeleteAppointment = (id) => {
+    const newAppointmentList = appointmentList.filter(
+      (appointment) => appointment.id !== id
+    );
+    setAppointmentList(newAppointmentList);
+  };
+
   return (
     <div className="App container mx-auto mt-3 font-thin p-5">
       <h1 className="text-5xl mb-5">
@@ -26,7 +33,11 @@ function App() {
       <Search />
       <ul className="divide-y divide-gray-200">
         {appointmentList.map((appointment) => (
-          <AppointmentInfo appointment={appointment} key={appointment.id} />
+          <AppointmentInfo
+            appointment={appointment}
+            key={appointment.id}
+            onDeleteAppointment={onDeleteAppointment}
+          />
         ))}
       </ul>
     </div>
