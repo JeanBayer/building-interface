@@ -1,10 +1,21 @@
 import { BiCalendar } from "react-icons/bi";
 import Search from "./components/Search";
 import AddAppointment from "./components/AddAppointment";
-import appointmentList from "./data.json";
 import AppointmentInfo from "./components/AppointmentInfo";
+import { useEffect, useState } from "react";
 
 function App() {
+  const [appointmentList, setAppointmentList] = useState([]);
+
+  useEffect(() => {
+    const fetchAppointments = async () => {
+      const response = await fetch("./data.json");
+      const data = await response.json();
+      setAppointmentList(data);
+    };
+    fetchAppointments();
+  }, []);
+
   return (
     <div className="App container mx-auto mt-3 font-thin p-5">
       <h1 className="text-5xl mb-5">
