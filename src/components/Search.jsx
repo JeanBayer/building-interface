@@ -50,7 +50,7 @@ const DropDown = ({ toggleSort }) => {
   );
 };
 
-const Search = () => {
+const Search = ({ query, setQuery }) => {
   const [toggleSort, setToggleSort] = useState(false);
 
   return (
@@ -64,7 +64,8 @@ const Search = () => {
           type="text"
           name="query"
           id="query"
-          value=""
+          value={query}
+          onChange={(e) => setQuery(e.target.value)}
           className="pl-8 py-2 rounded-md focus:ring-indigo-500 focus:border-indigo-500 block w-full sm:text-sm border-gray-300"
           placeholder="Search"
         />

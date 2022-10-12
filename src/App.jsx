@@ -6,6 +6,15 @@ import { useEffect, useState } from "react";
 
 function App() {
   const [appointmentList, setAppointmentList] = useState([]);
+  const [query, setQuery] = useState("");
+
+  const filteredAppointments = appointmentList.filter((item) => {
+    return (
+      item.petName.toLowerCase().includes(query.toLowerCase()) ||
+      item.ownerName.toLowerCase().includes(query.toLowerCase()) ||
+      item.aptNotes.toLowerCase().includes(query.toLowerCase())
+    );
+  });
 
   useEffect(() => {
     const fetchAppointments = async () => {
@@ -30,9 +39,9 @@ function App() {
         Your Appointments
       </h1>
       <AddAppointment />
-      <Search />
+      <Search query={query} setQuery={setQuery} />
       <ul className="divide-y divide-gray-200">
-        {appointmentList.map((appointment) => (
+        {filteredAppointments.map((appointment) => (
           <AppointmentInfo
             appointment={appointment}
             key={appointment.id}
