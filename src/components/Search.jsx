@@ -1,7 +1,13 @@
 import { useState } from "react";
 import { BiSearch, BiCaretDown, BiCheck } from "react-icons/bi";
 
-const DropDown = ({ toggleSort }) => {
+const DropDown = ({
+  toggleSort,
+  setOrderBy,
+  orderBy,
+  setOrderType,
+  orderType,
+}) => {
   if (!toggleSort) return null;
 
   return (
@@ -18,39 +24,64 @@ const DropDown = ({ toggleSort }) => {
         <div
           className="px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 hover:text-gray-900 flex justify-between cursor-pointer"
           role="menuitem"
+          onClick={() => {
+            setOrderBy("petName");
+          }}
         >
-          Pet Name <BiCheck />
+          Pet Name
+          {orderBy === "petName" && <BiCheck />}
         </div>
         <div
           className="px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 hover:text-gray-900 flex justify-between cursor-pointer"
           role="menuitem"
+          onClick={() => {
+            setOrderBy("ownerName");
+          }}
         >
-          Owner Name <BiCheck />
+          Owner Name
+          {orderBy === "ownerName" && <BiCheck />}
         </div>
         <div
           className="px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 hover:text-gray-900 flex justify-between cursor-pointer"
           role="menuitem"
+          onClick={() => {
+            setOrderBy("aptDate");
+          }}
         >
-          Date <BiCheck />
+          Date
+          {orderBy === "aptDate" && <BiCheck />}
         </div>
         <div
           className="px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 hover:text-gray-900 flex justify-between cursor-pointer border-gray-1 border-t-2"
           role="menuitem"
+          onClick={() => {
+            setOrderType("asc");
+          }}
         >
-          Asc <BiCheck />
+          Asc {orderType === "asc" && <BiCheck />}
         </div>
         <div
           className="px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 hover:text-gray-900 flex justify-between cursor-pointer"
           role="menuitem"
+          onClick={() => {
+            setOrderType("desc");
+          }}
         >
-          Desc <BiCheck />
+          Desc {orderType === "desc" && <BiCheck />}
         </div>
       </div>
     </div>
   );
 };
 
-const Search = ({ query, setQuery }) => {
+const Search = ({
+  query,
+  setQuery,
+  setOrderBy,
+  orderBy,
+  setOrderType,
+  orderType,
+}) => {
   const [toggleSort, setToggleSort] = useState(false);
 
   return (
@@ -81,7 +112,13 @@ const Search = ({ query, setQuery }) => {
             >
               Sort By <BiCaretDown className="ml-2" />
             </button>
-            <DropDown toggleSort={toggleSort} />
+            <DropDown
+              toggleSort={toggleSort}
+              setOrderBy={setOrderBy}
+              orderBy={orderBy}
+              setOrderType={setOrderType}
+              orderType={orderType}
+            />
           </div>
         </div>
       </div>
