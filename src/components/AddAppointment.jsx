@@ -1,8 +1,30 @@
 import { useState } from "react";
 import { BiCalendarPlus } from "react-icons/bi";
 
-const AddAppointment = () => {
+const AddAppointment = ({ onAddAppointment }) => {
   const [toggleForm, setToggleForm] = useState(false);
+  const [ownerName, setOwnerName] = useState("");
+  const [petName, setPetName] = useState("");
+  const [aptDate, setAptDate] = useState("");
+  const [aptTime, setAptTime] = useState("");
+  const [aptNotes, setAptNotes] = useState("");
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    onAddAppointment({
+      ownerName,
+      petName,
+      aptDate: `${aptDate} ${aptTime}`,
+      aptNotes,
+    });
+    setToggleForm(false);
+    setOwnerName("");
+    setPetName("");
+    setAptDate("");
+    setAptTime("");
+    setAptNotes("");
+  };
+
   return (
     <div>
       <button
@@ -17,7 +39,10 @@ const AddAppointment = () => {
         </div>
       </button>
       {toggleForm && (
-        <div className="border-r-2 border-b-2 border-l-2 border-light-blue-500 rounded-b-md pl-4 pr-4 pb-4">
+        <form
+          onSubmit={handleSubmit}
+          className="border-r-2 border-b-2 border-l-2 border-light-blue-500 rounded-b-md pl-4 pr-4 pb-4"
+        >
           <div className="sm:grid sm:grid-cols-3 sm:gap-4 sm:items-start  sm:pt-5">
             <label
               htmlFor="ownerName"
@@ -27,6 +52,8 @@ const AddAppointment = () => {
             </label>
             <div className="mt-1 sm:mt-0 sm:col-span-2">
               <input
+                value={ownerName}
+                onChange={(e) => setOwnerName(e.target.value)}
                 type="text"
                 name="ownerName"
                 id="ownerName"
@@ -44,6 +71,8 @@ const AddAppointment = () => {
             </label>
             <div className="mt-1 sm:mt-0 sm:col-span-2">
               <input
+                value={petName}
+                onChange={(e) => setPetName(e.target.value)}
                 type="text"
                 name="petName"
                 id="petName"
@@ -61,6 +90,8 @@ const AddAppointment = () => {
             </label>
             <div className="mt-1 sm:mt-0 sm:col-span-2">
               <input
+                value={aptDate}
+                onChange={(e) => setAptDate(e.target.value)}
                 type="date"
                 name="aptDate"
                 id="aptDate"
@@ -78,6 +109,8 @@ const AddAppointment = () => {
             </label>
             <div className="mt-1 sm:mt-0 sm:col-span-2">
               <input
+                value={aptTime}
+                onChange={(e) => setAptTime(e.target.value)}
                 type="time"
                 name="aptTime"
                 id="aptTime"
@@ -95,6 +128,8 @@ const AddAppointment = () => {
             </label>
             <div className="mt-1 sm:mt-0 sm:col-span-2">
               <textarea
+                value={aptNotes}
+                onChange={(e) => setAptNotes(e.target.value)}
                 id="aptNotes"
                 name="aptNotes"
                 rows="3"
@@ -114,7 +149,7 @@ const AddAppointment = () => {
               </button>
             </div>
           </div>
-        </div>
+        </form>
       )}
     </div>
   );

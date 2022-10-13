@@ -31,13 +31,6 @@ function App() {
     fetchAppointments();
   }, []);
 
-  const onDeleteAppointment = (id) => {
-    const newAppointmentList = appointmentList.filter(
-      (appointment) => appointment.id !== id
-    );
-    setAppointmentList(newAppointmentList);
-  };
-
   useEffect(() => {
     let order;
     if (orderType === "asc") {
@@ -58,13 +51,34 @@ function App() {
     setFilteredAppointments(sortedAppointments);
   }, [appointmentList, orderBy, orderType]);
 
+  const onDeleteAppointment = (id) => {
+    const newAppointmentList = appointmentList.filter(
+      (appointment) => appointment.id !== id
+    );
+    setAppointmentList(newAppointmentList);
+  };
+
+  const onAddAppointment = ({ petName, ownerName, aptNotes, aptDate }) => {
+    console.log(petName, ownerName, aptNotes, aptDate);
+    setAppointmentList([
+      ...appointmentList,
+      {
+        id: appointmentList.length + 1,
+        petName,
+        ownerName,
+        aptNotes,
+        aptDate,
+      },
+    ]);
+  };
+
   return (
     <div className="App container mx-auto mt-3 font-thin p-5">
       <h1 className="text-5xl mb-5">
         <BiCalendar className="inline-block text-red-400 align-top" />
         Your Appointments
       </h1>
-      <AddAppointment />
+      <AddAppointment onAddAppointment={onAddAppointment} />
       <Search
         query={query}
         setQuery={setQuery}
